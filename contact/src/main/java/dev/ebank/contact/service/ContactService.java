@@ -1,5 +1,6 @@
 package dev.ebank.contact.service;
 
+import dev.ebank.contact.clients.UserCLientRest;
 import dev.ebank.contact.model.dtos.ContactDto;
 import dev.ebank.contact.model.entity.Contact;
 import dev.ebank.contact.repository.ContactRepository;
@@ -16,12 +17,15 @@ public class ContactService {
     private ContactRepository contactRepository;
     @Autowired
     private ContactMapper contactMapper;
+    @Autowired
+    private UserCLientRest userCLientRest;
 
     public List<ContactDto> allUserContacts(Long id){
        return contactRepository.findContactByIdUser(id).stream().map(contactMapper::toDto).collect(Collectors.toList());
     }
     public ContactDto getContact(Long id){
-          return contactMapper.toDto(contactRepository.findById(id).get());
+
+        return contactMapper.toDto(contactRepository.findById(id).get());
     }
     public Boolean deleteContact(Long id){
         contactRepository.deleteById(id);
@@ -33,7 +37,9 @@ public class ContactService {
         contactRepository.save(contact);
         return true;
     }
-    public Long createContact(ContactDto contactDto){
-        return contactRepository.save(contactMapper.toEntity(contactDto)).getId();
+    public Long createContact(Long idUser, ContactDto contactDto){
+        Contact contact = contactMapper.toEntity(contactDto);
+        contact.setIdUser(idUser);
+        return contactRepository.save(contact).getId();
     }
 }

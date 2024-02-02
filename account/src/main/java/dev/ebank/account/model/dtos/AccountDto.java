@@ -1,7 +1,7 @@
 package dev.ebank.account.model.dtos;
 
 import dev.ebank.account.enums.AccountStatus;
-import dev.ebank.account.model.classes.Customer;
+import dev.ebank.account.model.classes.User;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,6 +16,7 @@ public class AccountDto {
     private double balance;
     private String currency;
     private AccountStatus status;
-    private Customer customer;
+    private Long userId;
+    private User user;
 
 }

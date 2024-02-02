@@ -1,6 +1,7 @@
 package dev.ebank.account.web;
 
 import dev.ebank.account.model.dtos.AccountDto;
+import dev.ebank.account.model.entities.Account;
 import dev.ebank.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,8 @@ public class AccountRestController {
     @Autowired
     private AccountService accountService;
 
-    @GetMapping("/accounts/")
+
+    @GetMapping("/accounts")
     public ResponseEntity<List<AccountDto>> getAllAccounts() {
         List<AccountDto> accounts = new ArrayList<>();
         accounts = accountService.allAccounts();
@@ -25,7 +27,7 @@ public class AccountRestController {
     public  ResponseEntity<AccountDto> getAccount(@PathVariable String id){
     return ResponseEntity.ok(accountService.getAccount(id));
     }
-    @PostMapping("/create")
+    @PostMapping("/create/{id}")
     public  ResponseEntity<String> createAccount(@RequestBody AccountDto accountDto){
         return  ResponseEntity.ok(accountService.newAccount(accountDto));
     }

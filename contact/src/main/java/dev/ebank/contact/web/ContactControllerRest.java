@@ -23,8 +23,8 @@ public class ContactControllerRest {
         return ResponseEntity.ok(contactService.getContact(id));
     }
     @PostMapping("/create")
-    public ResponseEntity<Long> addContact(@RequestBody ContactDto contactDto){
-        return ResponseEntity.ok(contactService.createContact(contactDto));
+    public ResponseEntity<Long> addContact(@PathVariable Long id, @RequestBody ContactDto contactDto){
+        return ResponseEntity.ok(contactService.createContact(id, contactDto));
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<Boolean> updateContact(@PathVariable Long id, @RequestBody ContactDto contactDto){

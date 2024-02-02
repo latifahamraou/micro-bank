@@ -13,11 +13,11 @@ import java.util.List;
 @Builder
 public class User {
 
-    private Integer id;
+    private Long id;
     private String firstname;
     private String lastname;
-    private String password;
     private String email;
     private boolean active;
 
 }
+

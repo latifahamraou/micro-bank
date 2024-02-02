@@ -1,19 +1,18 @@
 package dev.ebank.account.model.classes;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import jakarta.persistence.Column;
+import lombok.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class Customer {
+@Builder
+@ToString
+public class User {
     private Long id;
     private String firstname;
     private String lastname;
+   // private String password;
     private String email;
     private boolean active;
 

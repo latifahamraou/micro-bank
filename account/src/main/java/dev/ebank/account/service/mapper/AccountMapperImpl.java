@@ -28,8 +28,12 @@ public class AccountMapperImpl implements AccountMapper {
             account.createAt(accountDto.getCreateAt());
 
         }
-        if(accountDto.getCustomer() != null){
-            account.customer(accountDto.getCustomer());
+        if(accountDto.getUser() != null){
+            account.user(accountDto.getUser());
+
+        }
+        if(accountDto.getUserId() != null){
+            account.userId(accountDto.getUserId());
 
         }
 
@@ -57,8 +61,11 @@ public class AccountMapperImpl implements AccountMapper {
         if(account.getCreateAt() != null){
             accountDto.createAt(account.getCreateAt());
         }
-        if(account.getCustomer() != null){
-            accountDto.customer(account.getCustomer());
+        if(account.getUser() != null){
+            accountDto.user(account.getUser());
+        }
+        if(account.getUserId() != null){
+            accountDto.userId(account.getUserId());
         }
 
         return accountDto.build();
@@ -78,9 +85,9 @@ public class AccountMapperImpl implements AccountMapper {
         if(accountDto.getCurrency() != null){
             account.setCurrency(accountDto.getCurrency());
         }
-       /* if(accountDto.getStatus() != null){
+        if(accountDto.getStatus() != null){
             account.setStatus(accountDto.getStatus());
-        }*/
+        }
        /* if(accountDto.getCustomer() != null ){
             account.setCustomer(accountDto.getCustomer());
         }*/

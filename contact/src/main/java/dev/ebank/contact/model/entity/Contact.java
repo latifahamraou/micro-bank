@@ -20,8 +20,6 @@ public class Contact {
     private String lastname;
     private String email;
     private String iban;
-    @Transient
-    private User user;
     @Column(name = "id_user")
     private Long idUser;
 

@@ -70,6 +70,7 @@ public class ContactMapperImpl implements ContactMapper{
         if(contact.getEmail() != null){
             contactDto.email(contact.getEmail());
         }
+
         return contactDto.build();
     }
 }
