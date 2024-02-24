@@ -1,6 +1,7 @@
 package dev.ebank.account.service;
 
 import dev.ebank.account.clients.UserClientRest;
+import dev.ebank.account.exceptions.AccountNotFoundException;
 import dev.ebank.account.model.classes.User;
 import dev.ebank.account.model.dtos.AccountDto;
 import dev.ebank.account.model.entities.Account;
@@ -31,27 +32,31 @@ public class AccountService {
     }
     public AccountDto getAccount(String iban){
         Account acc =   accountRepository.findById(iban).get();
+
         User user= userCLientRest.findUserById(acc.getUserId());
         acc.setUser(user);
         return accountMapper.toDto(acc);
 
     }
     public Boolean deleteAccount(String iban) {
-        Account account =  accountRepository.findById(iban).orElseThrow(() -> new RuntimeException("code 101: le "));
-        accountRepository.deleteById(account.getId());
+        Account account =  accountRepository.findById(iban)
+                .orElseThrow(() -> new AccountNotFoundException("account not found"));
+        accountRepository.deleteById(account.getIban());
         return true;
     }
     public Boolean updateAccount(AccountDto accountDto) {
-        Account account =  accountRepository.findById(accountDto.getId()).orElseThrow(() -> new RuntimeException("code 101: le "));
+        Account account =  accountRepository.findById(accountDto.getIban())
+                .orElseThrow(() -> new AccountNotFoundException("account not found"));
         accountMapper.copy(accountDto, account);
         accountRepository.save(account);
         return true;
     }
     public String  newAccount(AccountDto accountDto) {
         Account account = accountMapper.toEntity(accountDto);
+
         User user = userCLientRest.findUserById(account.getUserId());
         account.setUser(user);
-        return accountRepository.save(account).getId();
+        return accountRepository.save(account).getIban();
 
     }
 

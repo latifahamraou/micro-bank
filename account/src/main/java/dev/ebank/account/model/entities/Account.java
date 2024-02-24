@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Account {
 
     @Id
-    private  String id;
+    private  String iban;
     private LocalDate createAt;
     private double balance;
     private String currency;

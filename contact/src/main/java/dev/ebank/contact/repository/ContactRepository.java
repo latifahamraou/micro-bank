@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface ContactRepository extends JpaRepository<Contact, Long> {
     List<Contact> findContactByIdUser(Long id);
+    Optional<Contact> findByIban(String iban);
 }

@@ -1,0 +1,86 @@
+services:
+  micro-bank-discovery-service:
+    build: ./discovery
+    container_name: micro-bank-discovery-service
+    ports:
+      - '8761:8761'
+    expose:
+      - '8761'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 10s
+      retries: 4
+  micro-bank-config-service:
+    build: ./config
+    container_name: micro-bank-config-service
+    ports:
+      - '8899:8899'
+    expose:
+      - '8899'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://micro-bank-discovery-service:8761/eureka
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8899/actuator/health" ]
+      interval: 10s
+      retries: 4
+    depends_on:
+      micro-bank-discovery-service:
+        condition: service_healthy
+
+  micro-bank-user-service:
+    build: ./user
+    container_name: micro-bank-user-service
+    ports:
+      - '8890:8890'
+    expose:
+      - '8890'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://micro-bank-discovery-service:8761/eureka
+      - CONFIG_SERVICE_URL=http://micro-bank-config-service:8899
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8890/actuator/health" ]
+      interval: 10s
+      retries: 4
+    depends_on:
+      micro-bank-config-service:
+        condition: service_healthy
+  micro-bank-account-service:
+    build: ./account
+    container_name: micro-bank-account-service
+    ports:
+      - '8891:8891'
+    expose:
+      - '8891'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://micro-bank-discovery-service:8761/eureka
+      - CONFIG_SERVICE_URL=http://micro-bank-config-service:8899
+    depends_on:
+      micro-bank-user-service:
+        condition: service_healthy
+  micro-bank-contact-service:
+    build: ./contact
+    container_name: micro-bank-contact-service
+    ports:
+      - '8892:8892'
+    expose:
+      - '8892'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://micro-bank-discovery-service:8761/eureka
+      - CONFIG_SERVICE_URL=http://micro-bank-config-service:8899
+    depends_on:
+      micro-bank-user-service:
+        condition: service_healthy
+  micro-bank-gateway-service:
+    build: ./gateway
+    container_name: micro-bank-gateway-service
+    ports:
+      - '8893:8893'
+    expose:
+      - '8893'
+    environment:
+      - DISCOVERY_SERVICE_URL=http://micro-bank-discovery-service:8761/eureka
+      - CONFIG_SERVICE_URL=http://micro-bank-config-service:8899
+    depends_on:
+      micro-bank-config-service:
+        condition: service_healthy
+

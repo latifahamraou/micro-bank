@@ -46,8 +46,8 @@ public class AccountMapperImpl implements AccountMapper {
             return null;
         }
         AccountDto.AccountDtoBuilder accountDto =AccountDto.builder();
-        if(account.getId() != null){
-            accountDto.id(account.getId());
+        if(account.getIban() != null){
+            accountDto.iban(account.getIban());
         }
         if(account.getBalance() != 0){
             accountDto.balance(account.getBalance());
@@ -76,8 +76,8 @@ public class AccountMapperImpl implements AccountMapper {
         if(accountDto == null){
             return;
         }
-        if(accountDto.getId() != null){
-            account.setId(accountDto.getId());
+        if(accountDto.getIban() != null){
+            account.setIban(accountDto.getIban());
         }
         if(accountDto.getBalance() != 0){
             account.setBalance(accountDto.getBalance());

@@ -27,7 +27,7 @@ public class AccountApplication {
           userCLientRest.allUsers().forEach(user -> {
 
                        Account bankAccount1 = Account.builder()
-                               .id(UUID.randomUUID().toString())
+                               .iban(UUID.randomUUID().toString())
                                .currency("MAD")
                                .balance(Math.random() * 80000)
                                .createAt(LocalDate.now())
@@ -36,7 +36,7 @@ public class AccountApplication {
                                .build();
 
                        Account bankAccount2 = Account.builder()
-                               .id(UUID.randomUUID().toString())
+                               .iban(UUID.randomUUID().toString())
                                .currency("MAD")
                                .balance(Math.random() * 65432)
                                .createAt(LocalDate.now())
